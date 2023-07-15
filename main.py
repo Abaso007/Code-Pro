@@ -17,10 +17,7 @@ streamlit_analytics.start_tracking(load_from_json="view.json")
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def check_if_not_null(query):
-    if(query == ""):
-        return 0
-    else:
-        return 1
+    return 0 if (query == "") else 1
 
 # ---------------------------------------------------------------------------------------------
 # Done
@@ -107,13 +104,11 @@ def pass_prompt_to_ai_explain_code_func(prompt):
     return response['choices'][0]['message']['content']
 
 def explain_code_func(query):
-    if(check_if_not_null(query)):
-        prompt_fn = "\n\"\"\"\nHere's what the above code is doing:\n"
-        prompt = query + prompt_fn
-        print(prompt)
-        return pass_prompt_to_ai_explain_code_func(prompt)
-    else:
+    if not (check_if_not_null(query)):
         return "No Input"
+    prompt = query + "\n\"\"\"\nHere's what the above code is doing:\n"
+    print(prompt)
+    return pass_prompt_to_ai_explain_code_func(prompt)
     
 
 # ---------------------------------------------------------------------------------------------
